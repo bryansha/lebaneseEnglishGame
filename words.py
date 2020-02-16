@@ -1,12 +1,22 @@
 from random import randint
-#from dictionary import wordPairs
-wordPairs = {
-    "as (adv.)":"metal",
-    "as (conj.1)": "baynama"}
+import ast
+from dictionary import wordPairs
 
-""" "as (conj.2)":"hasab",
-    "as (prep.)":"ka",
-    "as (pron.)":"athnaa'",
+print("INSTRUCTIONS: THIS IS A PROGRAM TO MEMORIZE NEW LEBANESE ARABIC WORDS IN ENGLISH.")
+print()
+print("This program will randomly generate a word pair to test you on, and will randomly either")
+print("give arabic asking for english or give english asking for arabic.")
+print("To remove a word pair type 'remove'.")
+print("To reset all removals type 'clear all'.")
+print("Report any bugs / translation errors to me on discord Nay2D2#3241")
+print()
+
+"""wordPairs = {
+    "as (adv.)":"metal",
+    "as (conj.1)": "baynama",
+    "as (conj.2)":"hasab",
+    "as (prep.)": "ka",
+    "as (pron.)": "athnaa'",
     "I":"",
     "his": "elu",
     "that":"",
@@ -17,7 +27,7 @@ wordPairs = {
     "are":"",
     "with":"ma" }"""
 
-#wordPairs = wordPairs
+wordPairs = wordPairs
 
 wordPairsLength = len(wordPairs)
 newEnglishList = list(wordPairs.keys())
@@ -33,18 +43,14 @@ while (True):
     filename = 'file/Notepads/dontShow.txt'
     with open(filename, 'r') as inn:
         dontShowString = inn.read()
-        print(dontShowString)
 
     if dontShowString == "":
         dontShow = {}
     else:
-        dontShow = dontShowString
+        dontShow = ast.literal_eval(f"{dontShowString}")
 
     randomWordIndex = randint(0, wordPairsLength - 1)
-    #print(randomWordIndex)
-
     randomEnglishOrLebanese = randint(0, 1)
-    #print(randomEnglishOrLebanese)
 
     correctEnglish = newEnglishList[randomWordIndex]
     correctArabic = newLebaneseList[randomWordIndex]
@@ -65,7 +71,6 @@ while (True):
             print("This word will not be shown again until you answer with: clear all")
 
             #assigning the word pair to not show up anymore
-            print(correctEnglish)
             dontShow[correctEnglish] = correctArabic
 
             #writing the dictionary to file
@@ -108,7 +113,7 @@ while (True):
             print("CORRECT!")
         elif userAnswer != correctEnglish:
             print("INCORRECT THE CORRECT ENGLISH WORD IS:", correctEnglishString)
-    else:
+    elif len(dontShow) == len(wordPairs):
         print("it seems you cleared every single word, automatically clearing all")
 
         # writing empty to file

@@ -1,1 +1,1 @@
-{'as (adv.)': 'metal'}
+{'abjurer n.': 'murtadd', 'abnormal adj.': 'shazz', 'ablepsy n.': 'amah', 'ablactate v.': 'yeftum', 'ablate v.': "yet'akal", 'abashing n.': 'ehraj', 'abandon': 'takhallah', 'abnormalcy n.': 'shuzuz', 'aback adv.': 'lelwaraa', 'abdomen n.': 'batn.', 'abandonable adj.': 'mahjur', 'abash v.': 'khajjal', 'abjure v.': 'yertadd an', 'abbreviation n.': 'ikhtisar', 'abed adv.': 'beltakhet', 'able adj.': 'qader'}
