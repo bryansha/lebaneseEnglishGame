@@ -1,9 +1,11 @@
+#Copyright 2020, Nathanael Bowley, All rights reserved.
+
 from random import randint
 import ast
 from dictionary import wordPairs
 
 print("INSTRUCTIONS: THIS IS A PROGRAM TO MEMORIZE NEW LEBANESE ARABIC WORDS IN ENGLISH.")
-print("words version 0.1.0")
+print("words version 0.1.0; Copyright 2020, Nathanael Bowley, All rights reserved.")
 print("This program will randomly generate a word pair to test you on, and will randomly either")
 print("give arabic asking for english or give english asking for arabic.")
 print("To remove a word pair type 'remove'.")
