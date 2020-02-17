@@ -25,6 +25,8 @@ wordPairs = {
     "are":"",
     "with":"ma" }"""
 
+print("English-Lebanese Study Tool")
+
 # main loop.
 while True:
 
@@ -44,7 +46,7 @@ while True:
         studySet = input("Reply with yes or no: ")
 
         if studySet == "yes":
-            if studySetPairs == {} or studySetPairs == "" or studySetPairs == None:
+            if studySetPairs == {} or studySetPairs == "" or studySetPairs is None:
                 print("\n---------------------------------------------------------------------------")
                 print("   Study Set is currently empty! Use 'add ss' to add a word to study set")
                 print("---------------------------------------------------------------------------\n")
@@ -52,7 +54,7 @@ while True:
                 wordPairs = wordPairs
                 studySetBool = False
                 break
-            elif studySetPairs != {} or studySetPairs != "" or studySetPairs != None:
+            elif studySetPairs != {} or studySetPairs != "" or studySetPairs is not None:
                 wordPairs = studySetPairs
                 studySetBool = True
                 break
@@ -192,8 +194,8 @@ while True:
                         for key, value in wordPairs.items():
                             key = "English: " + key
                             value = "Lebanese: " + value
-                            print("%-30s" % (key), end="")
-                            print("%-30s" % (value), sep=" ")
+                            print("%-30s" % key, end="")
+                            print("%-30s" % value, sep=" ")
                         break
                     elif userResponce == "no":
                         break
@@ -206,8 +208,8 @@ while True:
                         for key, value in studySetPairs.items():
                             key = "English: " + key
                             value = "Lebanese: " + value
-                            print("%-30s" % (key), end="")
-                            print("%-30s" % (value), sep=" ")
+                            print("%-30s" % key, end="")
+                            print("%-30s" % value, sep=" ")
                         break
                     elif userResponce == "no":
                         break
@@ -288,8 +290,8 @@ while True:
                         for key, value in wordPairs.items():
                             key = "English: " + key
                             value = "Lebanese: " + value
-                            print("%-30s" % (key), end="")
-                            print("%-30s" % (value), sep=" ")
+                            print("%-30s" % key, end="")
+                            print("%-30s" % value, sep=" ")
                         break
                     elif userResponce == "no":
                         break
@@ -302,8 +304,8 @@ while True:
                         for key, value in studySetPairs.items():
                             key = "English: " + key
                             value = "Lebanese: " + value
-                            print("%-30s" % (key), end="")
-                            print("%-30s" % (value), sep=" ")
+                            print("%-30s" % key, end="")
+                            print("%-30s" % value, sep=" ")
                         break
                     elif userResponce == "no":
                         break
