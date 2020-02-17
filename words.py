@@ -1,19 +1,15 @@
-#Copyright 2020, Nathanael Bowley, All rights reserved.
+# Copyright 2020, Nathanael Bowley, All rights reserved.
 
-from random import randint
-import ast
-from dictionary import wordPairs
+"""todo:
+    * add image to program
+    * add more arabic words
+    * add a search function to allow for searching for specific english / arabic words to add to study set
+    * figure out if this could be ported to android to use on phone. 
+    * improved ui?
+    * change the incorrect statement to a percentage matching actual word statement
+        Your response had 23% in common with the correct word. You answered INCORRECTLY!
 
-print("INSTRUCTIONS: THIS IS A PROGRAM TO MEMORIZE NEW LEBANESE ARABIC WORDS IN ENGLISH.")
-print("words version 0.1.0; Copyright 2020, Nathanael Bowley, All rights reserved.")
-print("This program will randomly generate a word pair to test you on, and will randomly either")
-print("give arabic asking for english or give english asking for arabic.")
-print("To remove a word pair type 'remove'.")
-print("To reset all removals type 'clear all'.")
-print("Report any bugs / translation errors to me on discord Nay2D2#3241")
-print()
-
-"""wordPairs = {
+wordPairs = {
     "as (adv.)":"metal",
     "as (conj.1)": "baynama",
     "as (conj.2)":"hasab",
@@ -29,112 +25,300 @@ print()
     "are":"",
     "with":"ma" }"""
 
-wordPairs = wordPairs
+# main loop.
+while True:
 
-wordPairsLength = len(wordPairs)
-newEnglishList = list(wordPairs.keys())
-newLebaneseList = list(wordPairs.values())
+    from random import randint
+    import ast
+    from dictionary import wordPairs
+    from studySet import studySetPairs
+    from dictionary import showWordPairs
+    from studySet import showStudySetPairs
 
-#a set of word key value pairs to not show
+    print("English-Lebanese Study Tool")
+    print("words version 0.1.1; Copyright 2020, Nathanael Bowley, All rights reserved.")
+    print("Report issues on discord to Nay2D2#3241\n")
 
-remove = "remove"
-clearall = "clear all"
+    while True:
+        print("Would you like to review your personal study set?")
+        studySet = input("Reply with yes or no: ")
 
-while (True):
+        if studySet == "yes":
+            if studySetPairs == {} or studySetPairs == "" or studySetPairs == None:
+                print("\n---------------------------------------------------------------------------")
+                print("   Study Set is currently empty! Use 'add ss' to add a word to study set")
+                print("---------------------------------------------------------------------------\n")
+                studySet = "no"
+                wordPairs = wordPairs
+                studySetBool = False
+                break
+            elif studySetPairs != {} or studySetPairs != "" or studySetPairs != None:
+                wordPairs = studySetPairs
+                studySetBool = True
+                break
 
-    filename = 'file/Notepads/dontShow.txt'
-    with open(filename, 'r') as inn:
-        dontShowString = inn.read()
+        elif studySet == "no":
+            wordPairs = wordPairs
+            studySetBool = False
+            break
 
-    if dontShowString == "":
-        dontShow = {}
-    else:
-        dontShow = ast.literal_eval(f"{dontShowString}")
+    wordPairsLength = len(wordPairs)
+    newEnglishList = list(wordPairs.keys())
+    newLebaneseList = list(wordPairs.values())
 
-    randomWordIndex = randint(0, wordPairsLength - 1)
-    randomEnglishOrLebanese = randint(0, 1)
+    # user keywords
+    remove = "remove"
+    clearall = "clear all"
+    commands = "commands"
+    addToStudySet = "add ss"
+    clearSS = "clear ss"
+    back = "back"
+    skip = "skip"
+    nextWord = "next"
+    allWordPairs = "show word pairs"
+    allStudySetPairs = "show ss pairs"
 
-    correctEnglish = newEnglishList[randomWordIndex]
-    correctArabic = newLebaneseList[randomWordIndex]
+    # checking to see if the user wants to have randomized language given or a specific one.
+    print("Would you like to specify the language given?")
+    chooseLanguage = ""
+    while True:
+        chooseLanguage = input("Choose one of the following: 'random', 'given english', 'given arabic': ")
 
-    correctEnglishString = f'"{correctEnglish}"'
-    correctArabicString = f'"{correctArabic}"'
+        if chooseLanguage == 'random' or chooseLanguage == 'given english' or chooseLanguage == 'given arabic':
+            break
 
-    #consider making a percentage correct instead of just right or wrong?
+    print("\n---------------------------------------------------------------")
+    print("   Type 'commands' in the answer box for important features!")
+    print("---------------------------------------------------------------")
 
-    # input is 0 so we give an english word and request lebanese
-    if randomEnglishOrLebanese == 0 and correctEnglish not in dontShow:
-        userAnswer = input(f"What is {correctEnglishString} in Arabic? Answer: ")
-        if userAnswer == remove:
+    condition = True
+    while condition:
 
-            #saying not to print it until clear all is applied
-            print("This word will not be shown again until you answer with: clear all")
-
-            #assigning the word pair to not show up anymore
-            dontShow[correctEnglish] = correctArabic
-
-            #writing the dictionary to file
-            filename = 'file/Notepads/dontShow.txt'
-            with open(filename, 'w') as out:
-                out.write(str(dontShow))
-
-        elif userAnswer == clearall:
-            print("you cleared the removed words, all words will now show")
-
-            #writing empty to file
-            filename = 'file/Notepads/dontShow.txt'
-            with open(filename, 'w') as out:
-                out.write("")
-
-        elif userAnswer == correctArabic:
-            print("CORRECT!")
-        elif userAnswer != correctArabic:
-            print("INCORRECT THE CORRECT ARABIC WORD IS:", correctArabicString)
-
-    # input is 1 so we give a lebanese word and request english
-    elif randomEnglishOrLebanese == 1 and correctEnglish not in dontShow:
-        userAnswer = input(f"What is {correctArabicString} in English? Answer: ")
-
-        if userAnswer == remove:
-
-            # saying not to print it until clear all is applied
-            print("This word will not be shown again until you answer with: clear all")
-
-            # assigning the word pair to not show up anymore
-            dontShow[correctEnglish] = correctArabic
-
-            # writing the dictionary to file
-            filename = 'file/Notepads/dontShow.txt'
-            with open(filename, 'w') as out:
-                out.write(str(dontShow))
-
-        elif userAnswer == clearall:
-            print("you cleared the removed words, all words will now show")
-
-            #writing empty to file
-            filename = 'file/Notepads/dontShow.txt'
-            with open(filename, 'w') as out:
-                out.write("")
-
-        elif userAnswer == correctEnglish:
-            print("CORRECT!")
-        elif userAnswer != correctEnglish:
-            print("INCORRECT THE CORRECT ENGLISH WORD IS:", correctEnglishString)
-    elif len(dontShow) == len(wordPairs):
-        print("it seems you cleared every single word, automatically clearing all")
-
-        # writing empty to file
         filename = 'file/Notepads/dontShow.txt'
-        with open(filename, 'w') as out:
-            out.write("")
+        with open(filename, 'r') as inn:
+            dontShowString = inn.read()
 
+        if dontShowString == "":
+            dontShow = {}
+        else:
+            dontShow = ast.literal_eval(f"{dontShowString}")
 
+        randomWordIndex = randint(0, wordPairsLength - 1)
 
+        randomEnglishOrLebanese = 0
+        if chooseLanguage == 'random':
+            randomEnglishOrLebanese = randint(0, 1)
+        elif chooseLanguage == 'given english':
+            randomEnglishOrLebanese = 0
+        elif chooseLanguage == 'given arabic':
+            randomEnglishOrLebanese = 1
 
+        correctEnglish = newEnglishList[randomWordIndex]
+        correctArabic = newLebaneseList[randomWordIndex]
 
+        correctEnglishString = f'"{correctEnglish}"'
+        correctArabicString = f'"{correctArabic}"'
 
+        # consider making a percentage correct instead of just right or wrong?
 
+        # input is 0 so we give an english word and request lebanese
+        if randomEnglishOrLebanese == 0 and correctEnglish not in dontShow:
 
+            print(f"\nWhat is {correctEnglishString} in Arabic?")
+            userAnswer = input("Answer: ")
+
+            if userAnswer == remove:
+
+                # saying not to print it until clear all is applied
+                print("This word will not be shown again until you answer with: clear all")
+
+                # assigning the word pair to not show up anymore
+                dontShow[correctEnglish] = correctArabic
+
+                # writing the dictionary to file
+                filename = 'file/Notepads/dontShow.txt'
+                with open(filename, 'w') as out:
+                    out.write(str(dontShow))
+
+            elif userAnswer == clearall:
+                print("you cleared the removed words, all words will now show")
+
+                # writing empty to file
+                filename = 'file/Notepads/dontShow.txt'
+                with open(filename, 'w') as out:
+                    out.write("")
+
+            elif userAnswer == clearSS:
+                print("you cleared the Study Set, all words will now show")
+
+                # writing empty to file
+                filename = 'file/Notepads/studySet.txt'
+                with open(filename, 'w') as out:
+                    out.write("")
+                break
+
+            elif userAnswer == commands:
+                print("Command List:\n •remove - removes Arabic/English word pair from being asked",
+                      "\n •clear all - WARNING: clears all removed words and allows the to reappear",
+                      "\n •commands - recalls this list",
+                      "\n •add ss - adds current word pair to your custom study set",
+                      "\n •clear ss - WARNING: clears your entire custom study set",
+                      "\n •back - returns you to the main menu of the program",
+                      "\n •next - continues on to the next word pair",
+                      f"\n •show word pairs - WARNING: all {len(showWordPairs)} word pairs will be shown",
+                      f"\n •show ss pairs - WARNING: {len(showStudySetPairs)} word pairs in study set will be shown")
+
+            elif userAnswer == addToStudySet:
+                print(f"{correctEnglish} added to study set")
+                studySetPairs[correctEnglish] = correctArabic
+
+                # writing the dictionary to file
+                filename = 'file/Notepads/studySet.txt'
+                with open(filename, 'w') as out:
+                    out.write(str(studySetPairs))
+
+            elif userAnswer == back:
+                print("\nRETURNING TO MAIN MENU...\n")
+                break
+
+            elif userAnswer == skip or userAnswer == nextWord:
+                continue
+
+            elif userAnswer == allWordPairs:
+                print(f"WARNING: this will show all {len(showWordPairs)} word pairs are you sure?")
+                while True:
+                    userResponce = input("yes or no: ")
+                    if userResponce == "yes":
+                        for key, value in wordPairs.items():
+                            key = "English: " + key
+                            value = "Lebanese: " + value
+                            print("%-30s" % (key), end="")
+                            print("%-30s" % (value), sep=" ")
+                        break
+                    elif userResponce == "no":
+                        break
+
+            elif userAnswer == allStudySetPairs:
+                print(f"WARNING: this will show all {len(showStudySetPairs)} word pairs are you sure?")
+                while True:
+                    userResponce = input("yes or no: ")
+                    if userResponce == "yes":
+                        for key, value in studySetPairs.items():
+                            key = "English: " + key
+                            value = "Lebanese: " + value
+                            print("%-30s" % (key), end="")
+                            print("%-30s" % (value), sep=" ")
+                        break
+                    elif userResponce == "no":
+                        break
+
+            elif userAnswer == correctArabic:
+                print("CORRECT!")
+            elif userAnswer != correctArabic:
+                print("INCORRECT THE CORRECT ARABIC WORD IS:", correctArabicString)
+
+        # input is 1 so we give a lebanese word and request english
+        elif randomEnglishOrLebanese == 1 and correctEnglish not in dontShow:
+
+            print(f"\nWhat is {correctArabicString} in Arabic?")
+            userAnswer = input("Answer: ")
+
+            if userAnswer == remove:
+
+                # saying not to print it until clear all is applied
+                print("This word will not be shown again until you answer with: clear all")
+
+                # assigning the word pair to not show up anymore
+                dontShow[correctEnglish] = correctArabic
+
+                # writing the dictionary to file
+                filename = 'file/Notepads/dontShow.txt'
+                with open(filename, 'w') as out:
+                    out.write(str(dontShow))
+
+            elif userAnswer == clearall:
+                print("you cleared the removed words, all words will now show")
+
+                # writing empty to file
+                filename = 'file/Notepads/dontShow.txt'
+                with open(filename, 'w') as out:
+                    out.write("")
+
+            elif userAnswer == addToStudySet:
+                print(f"{correctArabic} added to study set")
+                studySetPairs[correctEnglish] = correctArabic
+
+                # writing the dictionary to file
+                filename = 'file/Notepads/studySet.txt'
+                with open(filename, 'w') as out:
+                    out.write(str(studySetPairs))
+
+            elif userAnswer == clearSS:
+                print("you cleared the Study Set, all words will now show")
+
+                # writing empty to file
+                filename = 'file/Notepads/studySet.txt'
+                with open(filename, 'w') as out:
+                    out.write("")
+                break
+
+            elif userAnswer == commands:
+                print("Command List:\n •remove - removes Arabic/English word pair from being asked",
+                      "\n •clear all - WARNING: clears all removed words and allows the to reappear",
+                      "\n •commands - recalls this list",
+                      "\n •add ss - adds current word pair to your custom study set",
+                      "\n •clear ss - WARNING: clears your entire custom study set",
+                      "\n •back - returns you to the main menu of the program",
+                      "\n •next - continues on to the next word pair",
+                      f"\n •show word pairs - WARNING: all {len(showWordPairs)} word pairs will be shown",
+                      f"\n •show ss pairs - WARNING: {len(showStudySetPairs)} word pairs in study set will be shown")
+
+            elif userAnswer == back:
+                print("\nRETURNING TO MAIN MENU...\n")
+                break
+
+            elif userAnswer == skip or userAnswer == nextWord:
+                continue
+
+            elif userAnswer == allWordPairs:
+                print(f"WARNING: this will show all {len(showWordPairs)} word pairs are you sure?")
+                while True:
+                    userResponce = input("yes or no: ")
+                    if userResponce == "yes":
+                        for key, value in wordPairs.items():
+                            key = "English: " + key
+                            value = "Lebanese: " + value
+                            print("%-30s" % (key), end="")
+                            print("%-30s" % (value), sep=" ")
+                        break
+                    elif userResponce == "no":
+                        break
+
+            elif userAnswer == allStudySetPairs:
+                print(f"WARNING: this will show all {len(showStudySetPairs)} word pairs are you sure?")
+                while True:
+                    userResponce = input("yes or no: ")
+                    if userResponce == "yes":
+                        for key, value in studySetPairs.items():
+                            key = "English: " + key
+                            value = "Lebanese: " + value
+                            print("%-30s" % (key), end="")
+                            print("%-30s" % (value), sep=" ")
+                        break
+                    elif userResponce == "no":
+                        break
+
+            elif userAnswer == correctEnglish:
+                print("CORRECT!")
+            elif userAnswer != correctEnglish:
+                print("INCORRECT THE CORRECT ENGLISH WORD IS:", correctEnglishString)
+        elif len(dontShow) == len(wordPairs):
+            print("it seems you cleared every single word, automatically clearing all")
+
+            # writing empty to file
+            filename = 'file/Notepads/dontShow.txt'
+            with open(filename, 'w') as out:
+                out.write("")
 
 """
 they:
@@ -228,7 +412,6 @@ self:
 earth:
 father:
 """
-
 
 """
 any

@@ -1,0 +1,20 @@
+words Version 0.1.1 Change Log:
+
+Added a study set keyword that adds the word pair into a new dictionary.
+
+Added multiple new keywords
+
+Gave option to choose between study set and random words.
+
+If the user chooses random words it continues like normal using the same formatting structure used for specifying the language given.
+
+If the user chooses study set then the loop will not run the main while loop but instead will run a different
+while loop that is the same except that its reading and writing another new dictionary and txt file.
+
+added a 'remove from study set' command
+
+move top instructions for remove clear all ect into a new line that says.
+
+IMPORTANT: type -commands for special functions.
+
+Many other non listed improvements.

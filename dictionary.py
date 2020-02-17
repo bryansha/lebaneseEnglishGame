@@ -62,3 +62,6 @@ wordPairs = { "aback adv." : "lelwaraa",
 "abnegation n." : "tanazul",
 "abnormal adj." : "shazz",
 "abnormalcy n." : "shuzuz" }
+
+
+showWordPairs = wordPairs
