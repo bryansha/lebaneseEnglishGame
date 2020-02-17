@@ -25,8 +25,6 @@ wordPairs = {
     "are":"",
     "with":"ma" }"""
 
-print("English-Lebanese Study Tool")
-
 # main loop.
 while True:
 
